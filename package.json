@@ -1,0 +1,35 @@
+const { Client, GatewayIntentBits } = require('discord.js');
+
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds]
+});
+
+const TOKEN = process.env.TOKEN;
+
+const channels = [
+  '1499862887441633370',
+  '1499863684023976106',
+  '1499868546614820865',
+  '1499863655783862282',
+  '1499867764163088465',
+  '1499901664344146010'
+];
+
+client.once('ready', async () => {
+  console.log(`Logged in as ${client.user.tag}`);
+
+  for (const id of channels) {
+    try {
+      const channel = await client.channels.fetch(id);
+      if (channel) {
+        await channel.send("Hello from my bot 👋");
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  console.log("Done.");
+});
+
+client.login(TOKEN);
